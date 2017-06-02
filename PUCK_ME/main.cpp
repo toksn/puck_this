@@ -1,11 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include "Game.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
+	sf::RenderWindow window(sf::VideoMode(200, 200), "PUCK_ME");
+	
+	sf::CircleShape shape(10.f);
 	shape.setFillColor(sf::Color::Green);
 
+	Game game;
+		
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -19,16 +23,16 @@ int main()
 				auto size = window.getSize();
 				printf("\nwindow size changed: %i x %i", size.x, size.y);
 
-
 				window.setView(sf::View(sf::FloatRect(0, 0, size.x, size.y)));
 			}
-				
-
 		}
+
 
 		window.clear();
 		window.draw(shape);
 		window.display();
+
+		game.update();
 	}
 
 	return 0;
