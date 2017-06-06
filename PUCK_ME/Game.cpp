@@ -33,6 +33,30 @@ void Game::update()
 	}
 }
 
+void Game::run()
+{
+	while (m_window && m_window->isOpen())
+	{
+		sf::Event event;
+		while (m_window->pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				m_window->close();
+
+			if (event.type == sf::Event::Resized)
+			{
+				auto size = m_window->getSize();
+				printf("\nwindow size changed: %i x %i", size.x, size.y);
+
+				m_window->setView(sf::View(sf::FloatRect(0, 0, size.x, size.y)));
+			}
+		}
+
+		// update the game
+		update();
+	}
+}
+
 void Game::restart()
 {
 

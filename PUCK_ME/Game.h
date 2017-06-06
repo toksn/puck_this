@@ -10,6 +10,7 @@ public:
 	~Game();
 
 	void update();
+	void run();
 	void restart();
 
 	bool m_bPrintFPS;
