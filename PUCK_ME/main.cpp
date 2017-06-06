@@ -5,10 +5,13 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(200, 200), "PUCK_ME");
 	
-	sf::CircleShape shape(10.f);
-	shape.setFillColor(sf::Color::Green);
+	//sf::CircleShape shape(10.f);
+	//shape.setFillColor(sf::Color::Green);
 
 	Game game;
+	game.m_window = &window;
+
+	game.restart();
 		
 	while (window.isOpen())
 	{
@@ -26,11 +29,6 @@ int main()
 				window.setView(sf::View(sf::FloatRect(0, 0, size.x, size.y)));
 			}
 		}
-
-
-		window.clear();
-		window.draw(shape);
-		window.display();
 
 		game.update();
 	}

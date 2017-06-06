@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Puck.h"
 
 Game::Game()
 {
@@ -20,5 +21,24 @@ void Game::update()
 	if(m_bPrintFPS)
 		printf("\nFPS: %f", 1000.0f/deltaTime);
 
-	//Manager.update(deltaTime);
+	m_gameManager.refresh();
+
+	m_gameManager.update(deltaTime);
+
+	if (m_window)
+	{
+		m_window->clear();
+		m_gameManager.draw(*m_window);
+		m_window->display();
+	}
+}
+
+void Game::restart()
+{
+
+	// create a puck
+	//m_gameManager.create<Puck>(m_window->getSize().x, m_window->getSize().y);
+	m_gameManager.create<Puck>();
+
+	// create
 }
