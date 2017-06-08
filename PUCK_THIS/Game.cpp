@@ -1,10 +1,11 @@
 #include "Game.h"
 #include "Puck.h"
+#include "Icefield.h"
 
 Game::Game()
 {
 	m_frameClock = std::make_unique<sf::Clock>();
-	bool m_bPrintFPS = false;
+	m_bPrintFPS = true;
 }
 
 
@@ -60,9 +61,8 @@ void Game::run()
 void Game::restart()
 {
 
-	// create a puck
-	//m_gameManager.create<Puck>(m_window->getSize().x, m_window->getSize().y);
+	// create an icefield, puck and player
+	m_gameManager.create<Icefield>();
 	m_gameManager.create<Puck>();
 
-	// create
 }

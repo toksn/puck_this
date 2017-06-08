@@ -2,10 +2,10 @@
 #include "Entity.h"
 #include <SFML\Graphics.hpp>
 class Puck :
-	public Entity, public sf::CircleShape
+	public Entity
 {
 public:
-	Puck();
+	Puck(b2World* world);
 	~Puck();
 
 	void update(float deltaTime) override;
@@ -16,5 +16,6 @@ public:
 
 private:
 	void solveBoundCollisions();
+	sf::CircleShape m_circle;
 };
 

@@ -21,7 +21,7 @@ public:
 		static_assert(std::is_base_of<Entity, T>::value, "'T' must be derived from 'Entity'");
 
 		// create unique pointer by forwarding the given arguments + put it in the entities vector
-		m_entities.emplace_back(std::make_unique<T>(std::forward<TArgs>(args)...));
+		m_entities.emplace_back(std::make_unique<T>(m_world.get(), std::forward<TArgs>(args)...));
 		//m_entities.emplace_back(std::make_unique<T>());
 
 
@@ -39,7 +39,7 @@ public:
 		static_assert(std::is_base_of<Entity, T>::value, "'T' must be derived from 'Entity'");
 
 		// create unique pointer by forwarding the given arguments + put it in the entities vector
-		auto uPtr = std::make_unique<T>();
+		auto uPtr = std::make_unique<T>(m_world.get());
 		auto ptr = uPtr.get();
 		
 		m_entities.emplace_back(std::move(uPtr));
@@ -59,6 +59,8 @@ public:
 
 	void update(float deltaTime);
 	void draw(sf::RenderWindow & target);
+	sf::Vector2f convertToScreen(b2Vec2 worldPos);
+	b2Vec2 convertToWorld(sf::Vector2f screenPos);
 	void refresh();
 
 	void clear();
@@ -66,4 +68,5 @@ public:
 private:
 	std::vector<std::unique_ptr<Entity>> m_entities;
 	std::map<std::size_t, std::vector<Entity*>> m_groupedEntities;
+	std::unique_ptr<b2World> m_world;
 };
