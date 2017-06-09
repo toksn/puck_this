@@ -20,9 +20,9 @@ Icefield::Icefield(b2World* world) : Entity(world)
 	m_body = world->CreateBody(&bdef);
 
 	b2FixtureDef fd;
-	fd.density = 2.0f;
+	fd.density = 0.0f;
 	fd.friction = 0.0f;
-	fd.restitution = 0.5f;
+	fd.restitution = 1.0f;
 	
 	b2Vec2 boundaries[4];
 	float pixInMeter = 0.1f;
@@ -46,6 +46,9 @@ Icefield::Icefield(b2World* world) : Entity(world)
 
 Icefield::~Icefield()
 {
+	//if (m_world && m_body)
+	//	m_world->DestroyBody(m_body);
+	
 	printf("\nDestroyed an icefield.");
 }
 

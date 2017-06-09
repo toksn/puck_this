@@ -17,7 +17,7 @@ GameManager::~GameManager()
 
 void GameManager::update(float deltaTime)
 {
-	m_world->Step(deltaTime, 3, 4);
+	m_world->Step(deltaTime/1000.0f, 3, 4);
 
 	for (auto& e : m_entities) e->update(deltaTime);
 }

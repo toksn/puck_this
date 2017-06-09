@@ -3,6 +3,8 @@
 
 int main()
 {
+	//b2Settings::
+	
 	sf::RenderWindow window(sf::VideoMode(600, 400), "puck this s***");
 	
 	Game game;

@@ -64,5 +64,4 @@ void Game::restart()
 	// create an icefield, puck and player
 	m_gameManager.create<Icefield>();
 	m_gameManager.create<Puck>();
-
 }

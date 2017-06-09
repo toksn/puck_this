@@ -9,7 +9,8 @@ public:
 		m_world = world;
 		m_body = NULL;
 	}
-	virtual ~Entity() {}
+	virtual ~Entity() {
+	}
 	virtual void draw(sf::RenderWindow& mTarget) = 0;
 	virtual void update(float deltaTime) = 0;
 

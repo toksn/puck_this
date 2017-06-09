@@ -16,22 +16,30 @@ Puck::Puck(b2World* world) : Entity(world)
 	b2BodyDef bdef;
 	bdef.linearDamping = 0.0f;
 	bdef.angularDamping = 0.0f;
-	bdef.linearVelocity.x = 0.5f;
-	bdef.linearVelocity.y = 0.45f;
+	//bdef.linearVelocity.x = 50.0f;
+	//bdef.linearVelocity.y = 3.5f;
 	// pos half of the window
 	bdef.position = b2Vec2(30.0f, 15.0f);
 	bdef.type = b2_dynamicBody;
+	bdef.allowSleep = false;
 	m_body = world->CreateBody(&bdef);
 
 	b2FixtureDef fd;
-	fd.density = 2.0f;
+	fd.density = 20.0f;
 	fd.friction = 0.0f;
-	fd.restitution = 0.5f;
+
+	//fd.friction = 0.0f;
+	//fd.restitution = 5.0f;
+	
 	b2CircleShape circle;
 	circle.m_radius = 5.0f * 0.1f/*onePixelInMeter*/;
 	//circle.m_p = b2Vec2(10.0f, 0.0f);
 	fd.shape = &circle;
 	m_body->CreateFixture(&fd);
+	m_body->SetLinearVelocity(b2Vec2(90.0f, 40.0f));
+	
+	//m_body->ApplyForce(b2Vec2(0.04f, 0.09f), m_body->GetPosition(),true);
+	//m_body->ApplyForce(b2Vec2(400.0f, 90.0f), m_body->GetPosition(), true);
 	
 	// pixel per second
 	//m_vel = 200.0f;
@@ -44,6 +52,9 @@ Puck::Puck(b2World* world) : Entity(world)
 
 Puck::~Puck()
 {
+	//if (m_world && m_body)
+	//	m_world->DestroyBody(m_body);
+
 	printf("\nDestroyed a Puck");
 }
 
