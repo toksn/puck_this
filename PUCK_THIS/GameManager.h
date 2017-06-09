@@ -6,7 +6,10 @@
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "Puck.h"
-//class Entity;
+
+// define fixed physics step
+#define PHYSICS_STEP 0.01666666f
+
 
 class GameManager
 {
@@ -69,4 +72,6 @@ private:
 	std::vector<std::unique_ptr<Entity>> m_entities;
 	std::map<std::size_t, std::vector<Entity*>> m_groupedEntities;
 	std::unique_ptr<b2World> m_world;
+
+	float m_physicsTimer;
 };

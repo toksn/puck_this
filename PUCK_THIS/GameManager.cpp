@@ -8,6 +8,7 @@ GameManager::GameManager()
 	b2Vec2 gravity;
 	gravity.Set(0.0f, 0.0f);
 	m_world = std::make_unique<b2World>(gravity);
+	m_physicsTimer = 0.0f;
 }
 
 
@@ -17,7 +18,14 @@ GameManager::~GameManager()
 
 void GameManager::update(float deltaTime)
 {
-	m_world->Step(deltaTime/1000.0f, 3, 4);
+	// add physics timer in seconds
+	m_physicsTimer += deltaTime/1000.0f;
+	// do fixed physics steps until theres less than 16.666ms left
+	while (m_physicsTimer >= PHYSICS_STEP)
+	{
+		m_world->Step(PHYSICS_STEP, 3, 4);
+		m_physicsTimer -= PHYSICS_STEP;
+	}
 
 	for (auto& e : m_entities) e->update(deltaTime);
 }
