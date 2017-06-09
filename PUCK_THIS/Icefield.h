@@ -15,6 +15,6 @@ public:
 
 private:
 	sf::RectangleShape m_shape;
-	b2ChainShape* m_shapeChain;
+	b2Fixture* m_fixture;
 };
 

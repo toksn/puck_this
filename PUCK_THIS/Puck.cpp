@@ -25,9 +25,7 @@ Puck::Puck(b2World* world, GameManager* manager) : Entity(world, manager)
 	b2FixtureDef fd;
 	fd.density = 2.0f;
 	fd.friction = 0.0f;
-
-	//fd.friction = 0.0f;
-	//fd.restitution = 5.0f;
+	//fd.restitution = 0.5f;
 	
 	b2CircleShape circle;
 	fd.shape = &circle;
@@ -35,7 +33,7 @@ Puck::Puck(b2World* world, GameManager* manager) : Entity(world, manager)
 	m_body->SetLinearVelocity(b2Vec2(9.0f, 4.0f));
 	
 	// set radius
-	setRadius(5.f);
+	setRadius(.5f);
 	
 	printf("\nCreated a Puck");
 }
@@ -67,9 +65,9 @@ void Puck::setRadius(float radius_meter)
 	
 	if (m_circlefixture)
 	{
-		b2Shape* shape = m_circlefixture->GetShape();
+		b2CircleShape* shape = static_cast<b2CircleShape*>(m_circlefixture->GetShape());
 		if (shape)
-			((b2CircleShape*)shape)->m_radius = radius_meter;
+			shape->m_radius = radius_meter;
 	}	
 }
 
