@@ -1,14 +1,12 @@
 #include "Puck.h"
+#include "GameManager.h"
 
 
 
-Puck::Puck(b2World* world) : Entity(world)
+Puck::Puck(b2World* world, GameManager* manager) : Entity(world, manager)
 {
 	// create draw circle shape //todo: radius
-	m_circle.setRadius(5.0f);
 	m_circle.setFillColor(sf::Color::Green);
-	//m_circle.setPosition(10.0f, 5.0f);
-	m_circle.setOrigin(sf::Vector2f(2.5f, 2.5f));
 	m_transformable = &m_circle;
 	m_drawable = &m_circle;
 
@@ -25,27 +23,20 @@ Puck::Puck(b2World* world) : Entity(world)
 	m_body = world->CreateBody(&bdef);
 
 	b2FixtureDef fd;
-	fd.density = 20.0f;
+	fd.density = 2.0f;
 	fd.friction = 0.0f;
 
 	//fd.friction = 0.0f;
 	//fd.restitution = 5.0f;
 	
 	b2CircleShape circle;
-	circle.m_radius = 5.0f * 0.1f/*onePixelInMeter*/;
-	//circle.m_p = b2Vec2(10.0f, 0.0f);
 	fd.shape = &circle;
-	m_body->CreateFixture(&fd);
-	m_body->SetLinearVelocity(b2Vec2(90.0f, 40.0f));
+	m_circlefixture = m_body->CreateFixture(&fd);
+	m_body->SetLinearVelocity(b2Vec2(9.0f, 4.0f));
 	
-	//m_body->ApplyForce(b2Vec2(0.04f, 0.09f), m_body->GetPosition(),true);
-	//m_body->ApplyForce(b2Vec2(400.0f, 90.0f), m_body->GetPosition(), true);
+	// set radius
+	setRadius(5.f);
 	
-	// pixel per second
-	//m_vel = 200.0f;
-	// TODO: this has to be normalized every time it is set
-	//m_dir = sf::Vector2f(1.0f, 0.5f);
-
 	printf("\nCreated a Puck");
 }
 
@@ -60,20 +51,35 @@ Puck::~Puck()
 
 void Puck::update(float deltaTime)
 {
-	solveBoundCollisions();
 }
 
 void Puck::draw(sf::RenderWindow & target)
 {
-	if (m_body)
-	{
-		//setRadius();
-		//setPosition(convertToScreenPos(m_body->GetPosition()));
-		//target.draw(m_transformable);
-	}
+	target.draw(m_circle);
 }
 
-void Puck::solveBoundCollisions()
+void Puck::setRadius(float radius_meter)
 {
+	float radius_px = m_gameManager->convertToScreen(radius_meter);
+	m_circle.setRadius(radius_px);
+	if (m_transformable)
+		m_transformable->setOrigin(radius_px, radius_px);
 	
+	if (m_circlefixture)
+	{
+		b2Shape* shape = m_circlefixture->GetShape();
+		if (shape)
+			((b2CircleShape*)shape)->m_radius = radius_meter;
+	}	
+}
+
+float Puck::getRadius()
+{
+	if (m_circlefixture)
+	{
+		b2Shape* shape = m_circlefixture->GetShape();
+		if (shape)
+			return ((b2CircleShape*)shape)->m_radius;
+	}
+	return 0.0f;
 }

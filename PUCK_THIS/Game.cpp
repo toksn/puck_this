@@ -49,7 +49,7 @@ void Game::run()
 				auto size = m_window->getSize();
 				printf("\nwindow size changed: %i x %i", size.x, size.y);
 
-				m_window->setView(sf::View(sf::FloatRect(0, 0, size.x, size.y)));
+				m_window->setView(sf::View(sf::FloatRect(0.0f, 0.0f, (float)size.x, (float)size.y)));
 			}
 		}
 

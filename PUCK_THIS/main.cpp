@@ -6,7 +6,7 @@ int main()
 	//b2Settings::
 	
 	sf::RenderWindow window(sf::VideoMode(600, 400), "puck this s***");
-	
+	window.setFramerateLimit(100);
 	Game game;
 	game.m_window = &window;
 

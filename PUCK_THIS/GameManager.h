@@ -17,14 +17,14 @@ public:
 	GameManager();
 	~GameManager();
 
-	template<typename T, typename... TArgs> T& create(TArgs&&... args)
+	template<typename T, typename... TArgs> inline T& create(TArgs&&... args)
 	{
 		//return T(std::forward<TArgs>(args));
 
 		static_assert(std::is_base_of<Entity, T>::value, "'T' must be derived from 'Entity'");
 
 		// create unique pointer by forwarding the given arguments + put it in the entities vector
-		m_entities.emplace_back(std::make_unique<T>(m_world.get(), std::forward<TArgs>(args)...));
+		m_entities.emplace_back(std::make_unique<T>(m_world.get(), this, std::forward<TArgs>(args)...));
 		//m_entities.emplace_back(std::make_unique<T>());
 
 
@@ -37,12 +37,12 @@ public:
 		return *ptr;
 	}
 
-	template<typename T> T& create()
+	template<typename T> inline T& create()
 	{
 		static_assert(std::is_base_of<Entity, T>::value, "'T' must be derived from 'Entity'");
 
 		// create unique pointer by forwarding the given arguments + put it in the entities vector
-		auto uPtr = std::make_unique<T>(m_world.get());
+		auto uPtr = std::make_unique<T>(m_world.get(), this);
 		auto ptr = uPtr.get();
 		
 		m_entities.emplace_back(std::move(uPtr));
@@ -62,10 +62,14 @@ public:
 
 	void update(float deltaTime);
 	void draw(sf::RenderWindow & target);
+
+	// converting methods
 	sf::Vector2f convertToScreen(b2Vec2 worldPos);
 	b2Vec2 convertToWorld(sf::Vector2f screenPos);
-	void refresh();
+	float convertToScreen(float worldSize);
+	float convertToWorld(float screenSize);
 
+	void refresh();
 	void clear();
 
 private:

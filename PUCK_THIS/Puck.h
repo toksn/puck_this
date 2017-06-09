@@ -5,17 +5,17 @@ class Puck :
 	public Entity
 {
 public:
-	Puck(b2World* world);
+	Puck(b2World* world, GameManager* manager);
 	~Puck();
 
 	void update(float deltaTime) override;
 	void draw(sf::RenderWindow& target) override;
 
-	sf::Vector2f m_dir;
-	float m_vel;
-
+	// radius in meter
+	void setRadius(float radius_meter);
+	float getRadius();
 private:
-	void solveBoundCollisions();
+	b2Fixture* m_circlefixture;
 	sf::CircleShape m_circle;
 };
 

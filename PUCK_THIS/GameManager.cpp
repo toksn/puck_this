@@ -40,15 +40,16 @@ void GameManager::draw(sf::RenderWindow& target)
 			sf::Vector2f screenPos = convertToScreen(worldPos);
 
 			e->m_transformable->setPosition(screenPos);
-			target.draw(*e->m_drawable);
+			//target.draw(*e->m_drawable);
 		}
-		//e->draw(target);		
+
+		e->draw(target);
 	}
 }
 
 // todo: make depending on window
 constexpr float oneMeterInPixel = 10.0f;
-constexpr float onePixelInMeter = 0.1f;
+constexpr float onePixelInMeter = 1.0f/ oneMeterInPixel;
 sf::Vector2f GameManager::convertToScreen(b2Vec2 worldPos)
 {
 	return sf::Vector2f(worldPos.x * oneMeterInPixel, worldPos.y * oneMeterInPixel);
@@ -56,6 +57,15 @@ sf::Vector2f GameManager::convertToScreen(b2Vec2 worldPos)
 b2Vec2 GameManager::convertToWorld(sf::Vector2f screenPos)
 {
 	return b2Vec2(screenPos.x * onePixelInMeter, screenPos.y * onePixelInMeter);
+}
+
+float GameManager::convertToScreen(float worldSize)
+{
+	return worldSize*oneMeterInPixel;
+}
+float GameManager::convertToWorld(float screenSize)
+{
+	return screenSize*onePixelInMeter;
 }
 
 void GameManager::refresh()
