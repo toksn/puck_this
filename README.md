@@ -7,18 +7,17 @@ primary: shoot/check/supershoot (m1), secondary: pass/deke (m2), special (combin
 phase1, version 0.0.0 to 1.0.0
 2 weeks estimated
 
-- minimal level bounds (rectangle)
-- SFML to draw stuff
-- puck
-- player (rectangle + circle for collision)
-- simple collisions
-- goals (rectangle)
-- scoring + gametime logic
-- simple startmenu (start, exit)
-- endgame screen
+- v - minimal level bounds (rectangle)
+- v - SFML to draw stuff
+- v - puck
+- x - player (rectangle + circle for collision)
+- v - use box2D for collisions
+- x - goals (rectangle)
+- x - scoring + gametime logic
+- x - simple startmenu (start, exit)
+- x - endgame screen
 
 phase2, version 1.0.0 to 2.0.0
-- use box2D for collisions
-- use imgui for GUI
-- add player interactions (body checking)
+- x - use imgui for GUI
+- x - add player interactions (body checking)
 - ...
