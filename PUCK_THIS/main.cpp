@@ -3,7 +3,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "puck this s***");
+	sf::RenderWindow window(sf::VideoMode(600, 400), "puck this s***");
 	
 	Game game;
 	game.m_window = &window;

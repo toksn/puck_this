@@ -7,26 +7,29 @@ Puck::Puck(b2World* world) : Entity(world)
 	// create draw circle shape //todo: radius
 	m_circle.setRadius(5.0f);
 	m_circle.setFillColor(sf::Color::Green);
-	m_circle.setPosition(10.0f, 5.0f);
+	//m_circle.setPosition(10.0f, 5.0f);
+	m_circle.setOrigin(sf::Vector2f(2.5f, 2.5f));
 	m_transformable = &m_circle;
 	m_drawable = &m_circle;
 
 	// create world space collision
 	b2BodyDef bdef;
-	bdef.linearDamping = 0.1;
-	bdef.angularDamping = 0.1;
-	bdef.linearVelocity.x = 2.0;
-	bdef.linearVelocity.y = 1.0;
-	bdef.position = b2Vec2(0.5, 0.5);
+	bdef.linearDamping = 0.0f;
+	bdef.angularDamping = 0.0f;
+	bdef.linearVelocity.x = 0.5f;
+	bdef.linearVelocity.y = 0.45f;
+	// pos half of the window
+	bdef.position = b2Vec2(30.0f, 15.0f);
 	bdef.type = b2_dynamicBody;
 	m_body = world->CreateBody(&bdef);
 
 	b2FixtureDef fd;
 	fd.density = 2.0f;
-	fd.friction = 0.01f;
+	fd.friction = 0.0f;
 	fd.restitution = 0.5f;
 	b2CircleShape circle;
 	circle.m_radius = 5.0f * 0.1f/*onePixelInMeter*/;
+	//circle.m_p = b2Vec2(10.0f, 0.0f);
 	fd.shape = &circle;
 	m_body->CreateFixture(&fd);
 	
