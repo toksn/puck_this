@@ -44,9 +44,6 @@
     <ClInclude Include="Puck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Icefield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
