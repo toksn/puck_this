@@ -8,15 +8,12 @@ class GameManager;
 class Entity
 {
 public:
-	Entity(b2World* world, GameManager* man) {
-		m_world = world;
-		m_body = NULL;
-		m_gameManager = man;
-	}
-	virtual ~Entity() {
-	}
+	Entity(b2World* world, GameManager* man);
+	virtual ~Entity();
 	virtual void draw(sf::RenderWindow& target) = 0;
 	virtual void update(float deltaTime) = 0;
+
+	virtual void setPosition(b2Vec2 pos);
 
 	bool destroyed = false;
 	b2Body* m_body;
