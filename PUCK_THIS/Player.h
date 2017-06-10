@@ -1,6 +1,15 @@
 #pragma once
 #include "CircleColEntity.h"
 
+/*TODO:
+- moving the player (by own velo to simulate ice)
+- actual control sheme (keyboard only? mouse + keyboard?)
+- find physics body properties
+- shoot
+
+- pass
+*/
+
 class Player :
 	public CircleColEntity
 {
