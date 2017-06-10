@@ -48,27 +48,9 @@ void Player::update(float deltaTime)
 
 void Player::setRadius(float radius_meter)
 {
-	float height = radius_meter * m_fitFactor;
+	float height = radius_meter * 4.0f * m_fitFactor;
+	// use set height method because fitfactor is used in there
 	setPlayerHeight(height);
-
-		/*
-	//CircleColEntity::setRadius(radius_meter);
-	float radius_px = m_gameManager->convertToScreen(radius_meter);
-	m_circle.setRadius(radius_px * m_virtualCircleSize);
-	if (m_transformable)
-		m_transformable->setOrigin(radius_px * m_virtualCircleSize, radius_px * m_virtualCircleSize);
-
-	// collision circle has actual radius (without size multiplier)
-	if (m_circlefixture)
-	{
-		b2CircleShape* shape = static_cast<b2CircleShape*>(m_circlefixture->GetShape());
-		if (shape)
-			shape->m_radius = radius_meter;
-	}
-		
-	// make player rect size (1 x 2.2) times diameter of the circle
-	m_playerRect.setSize(sf::Vector2f(radius_px*2.0f, radius_px*4.4f));
-	*/
 }
 
 //
