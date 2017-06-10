@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Puck.h"
 #include "Icefield.h"
+#include "Player.h"
 
 Game::Game()
 {
@@ -64,4 +65,5 @@ void Game::restart()
 	// create an icefield, puck and player
 	m_gameManager.create<Icefield>();
 	m_gameManager.create<Puck>();
+	m_gameManager.create<Player>();
 }

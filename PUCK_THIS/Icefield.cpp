@@ -18,12 +18,12 @@ Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager
 
 	// create world space collision
 	b2BodyDef bdef;
-	bdef.position = b2Vec2(30.0f, 15.0f);
+	bdef.position = b2Vec2(15.0f, 7.5f);
 	bdef.type = b2_staticBody;
 	m_body = world->CreateBody(&bdef);
 
 	// set initial size
-	resize(80.0f, 20.0f);
+	resize(20.0f, 10.0f);
 
 	printf("\nCreated an icefield.");
 }

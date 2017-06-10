@@ -48,7 +48,7 @@ void GameManager::draw(sf::RenderWindow& target)
 }
 
 // todo: make depending on window
-constexpr float oneMeterInPixel = 10.0f;
+constexpr float oneMeterInPixel = 20.0f;
 constexpr float onePixelInMeter = 1.0f/ oneMeterInPixel;
 sf::Vector2f GameManager::convertToScreen(b2Vec2 worldPos)
 {

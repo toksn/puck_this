@@ -1,8 +1,8 @@
 #pragma once
-#include "Entity.h"
-#include <SFML\Graphics.hpp>
+#include "CircleColEntity.h"
+
 class Puck :
-	public Entity
+	public CircleColEntity
 {
 public:
 	Puck(b2World* world, GameManager* manager);
@@ -10,12 +10,5 @@ public:
 
 	void update(float deltaTime) override;
 	void draw(sf::RenderWindow& target) override;
-
-	// radius in meter
-	void setRadius(float radius_meter);
-	float getRadius();
-private:
-	b2Fixture* m_circlefixture;
-	sf::CircleShape m_circle;
 };
 
