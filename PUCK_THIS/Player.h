@@ -30,4 +30,9 @@ protected:
 	sf::RectangleShape m_playerRect;
 	float m_virtualCircleSize;
 	float m_fitFactor;
+
+	b2Vec2 m_vel;
+	float m_accel;
+	float m_maxSpeed;
+	float m_damping;
 };

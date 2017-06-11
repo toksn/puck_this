@@ -29,6 +29,12 @@ Player::Player(b2World* world, GameManager* manager) : CircleColEntity(world, ma
 	m_body->SetTransform(b2Vec2(16.0f, 7.5f), 0.0f);
 	// set radius
 	setPlayerHeight(2.0f);
+
+	// 10 meter per second = 36km/h
+	m_accel = 0.1f;
+	// max speed 10 meter per second
+	m_maxSpeed = 10.0f;
+	m_damping = 0.01f;
 	
 	printf("\nCreated a Player");
 }
@@ -44,6 +50,42 @@ Player::~Player()
 
 void Player::update(float deltaTime)
 {
+	float curAccel = m_accel* deltaTime / 1000.0f;
+	float curDamp = m_damping * deltaTime / 1000.0f;
+
+	// accelerating
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		m_vel.y -= curAccel;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		m_vel.y += curAccel;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		m_vel.x -= curAccel;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		m_vel.x += curAccel;
+
+
+	//damping
+	if (abs(m_vel.x) < curDamp)
+		m_vel.x = 0.0f;
+	else if (m_vel.x > 0.0f)
+		m_vel.x -= curDamp;
+	else
+		m_vel.x += curDamp;
+
+	if (abs(m_vel.y) < curDamp)
+		m_vel.y = 0.0f;
+	else if (m_vel.y > 0.0f)
+		m_vel.y -= curDamp;
+	else
+		m_vel.y += curDamp;
+
+
+	// limit at max speed
+	if (m_vel.Length() > m_maxSpeed)
+		m_vel.Normalize() * m_maxSpeed;
+
+	// set new pos
+	m_body->SetTransform(m_body->GetPosition() + m_vel, m_body->GetAngle());
 }
 
 void Player::setRadius(float radius_meter)
