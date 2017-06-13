@@ -5,7 +5,7 @@ Puck::Puck(b2World* world, GameManager* manager) : CircleColEntity(world, manage
 	m_circle.setFillColor(sf::Color::Green);
 
 	// fixture settings
-	m_circlefixture->SetDensity(2.0f);
+	m_circlefixture->SetDensity(0.6f);
 	m_circlefixture->SetFriction(0.0f);
 
 	// body settings

@@ -16,14 +16,15 @@ Player::Player(b2World* world, GameManager* manager) : CircleColEntity(world, ma
 	m_playerRect.setFillColor(sf::Color(0, 20, -1, 160));
 
 	// fixture settings
-	m_circlefixture->SetDensity(20.0f);
-	m_circlefixture->SetFriction(0.0f);
+	m_circlefixture->SetDensity(80.0f);
+	m_circlefixture->SetFriction(0.5f);
 	//m_circlefixture->SetRestitution(1.0f);
 
 	// body settings
 	m_body->SetLinearDamping(0.0f);
 	m_body->SetAngularDamping(0.0f);
 	m_body->SetType(b2_staticBody);
+	//m_body->SetType(b2_dynamicBody);
 
 	// set position
 	m_body->SetTransform(b2Vec2(16.0f, 7.5f), 0.0f);
@@ -50,8 +51,8 @@ Player::~Player()
 
 void Player::update(float deltaTime)
 {
-	float curAccel = m_accel* deltaTime / 1000.0f;
-	float curDamp = m_damping * deltaTime / 1000.0f;
+	float curAccel = m_accel * deltaTime;
+	float curDamp = m_damping * deltaTime;
 
 	// accelerating
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -82,7 +83,10 @@ void Player::update(float deltaTime)
 
 	// limit at max speed
 	if (m_vel.Length() > m_maxSpeed)
-		m_vel.Normalize() * m_maxSpeed;
+	{
+		m_vel.Normalize();
+		m_vel *= m_maxSpeed;
+	}
 
 	// set new pos
 	m_body->SetTransform(m_body->GetPosition() + m_vel, m_body->GetAngle());

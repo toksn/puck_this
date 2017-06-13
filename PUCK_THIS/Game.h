@@ -10,6 +10,7 @@ public:
 	~Game();
 
 	void update();
+	void setMaxFPS(uint16 maxFPS);
 	void run();
 	void restart();
 
@@ -19,5 +20,8 @@ public:
 private:
 	std::unique_ptr<sf::Clock> m_frameClock;
 	GameManager m_gameManager;
+	uint16		m_maxFPS;
+	float		m_renderStep;
+	float		m_renderTimer;
 };
 
