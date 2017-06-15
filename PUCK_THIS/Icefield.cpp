@@ -1,6 +1,5 @@
 #include "Icefield.h"
 #include "GameManager.h"
-//#include "Goal.h"
 
 
 Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager)
@@ -21,6 +20,12 @@ Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager
 	bdef.position = b2Vec2(15.0f, 7.5f);
 	bdef.type = b2_staticBody;
 	m_body = world->CreateBody(&bdef);
+
+	// create two goals
+	m_goal_a = ::std::make_unique<Goal>(manager->create<Goal>());
+	m_goal_b = ::std::make_unique<Goal>(manager->create<Goal>());
+	
+
 
 	// set initial size
 	resize(20.0f, 10.0f);
@@ -44,6 +49,34 @@ void Icefield::draw(sf::RenderWindow & target)
 
 void Icefield::update(float deltaTime)
 {
+}
+
+void Icefield::setPosition(b2Vec2 pos)
+{
+	Entity::setPosition(pos);
+
+	arrangeGoals(true);
+}
+
+void Icefield::arrangeGoals(bool bRepositionOnly)
+{
+	float goal_dist_to_border = m_size.x * 0.1f;
+	float x_half = m_size.x * 0.5f;
+
+	// set size of the goals 
+	if (!bRepositionOnly)
+	{
+		float goal_length = m_size.y * 0.15f;
+		m_goal_a.get()->resize(goal_length * 0.5f, goal_length, 180.0f);
+		m_goal_b.get()->resize(goal_length * 0.5f, goal_length, 0.0f);
+	}
+	//position relative to icefield
+	if (m_body)
+	{
+		b2Vec2 icepos = m_body->GetPosition();
+		m_goal_a.get()->setPosition(b2Vec2(icepos.x - x_half + goal_dist_to_border, icepos.y));
+		m_goal_b.get()->setPosition(b2Vec2(icepos.x + x_half - goal_dist_to_border, icepos.y));
+	}
 }
 
 void Icefield::resize(float x_meter, float y_meter)
@@ -80,6 +113,11 @@ void Icefield::resize(float x_meter, float y_meter)
 			sf::Vector2f size_px = m_gameManager->convertToScreen(b2Vec2(x_meter, y_meter));
 			m_shape.setSize(size_px);
 			m_shape.setOrigin(size_px*0.5f);
+
+			m_size.x = x_meter;
+			m_size.y = y_meter;
+
+			arrangeGoals();
 		}		
 	}	
 }
