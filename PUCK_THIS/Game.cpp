@@ -3,6 +3,7 @@
 //#include <chrono>
 
 #include "Game.h"
+#include "Goal.h"
 #include "Puck.h"
 #include "Icefield.h"
 #include "Player.h"
@@ -99,6 +100,12 @@ void Game::restart()
 
 	// create an icefield, puck and player
 	m_gameManager.create<Icefield>();
+	Goal goal_a = m_gameManager.create<Goal>();
+	Goal goal_b = m_gameManager.create<Goal>();
 	m_gameManager.create<Puck>();
 	m_gameManager.create<Player>();
+
+
+	goal_a.setPosition(b2Vec2(-10.0f, 5.0f));
+	goal_b.setPosition(b2Vec2(-10.0f, 5.0f));
 }

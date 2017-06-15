@@ -1,24 +1,23 @@
 #pragma once
 #include "Entity.h"
+#include "PolyLine.h"
 
-//class Goal;
-
-class Icefield :
+class Goal :
 	public Entity
 {
 public:
-	Icefield(b2World* world, GameManager* manager);
-	~Icefield();
+	Goal(b2World* world, GameManager* manager);
+	~Goal();
 
 	// Inherited via Entity
 	virtual void draw(sf::RenderWindow & target) override;
 	virtual void update(float deltaTime) override;
 
-	void resize(float x_meter, float y_meter);
+	void resize(float x_meter, float y_meter, float angle);
 
 private:
-	sf::RectangleShape m_shape;
+	
+	PolyLine m_line;
 	b2Fixture* m_fixture;
-	//Goal m_goal;
 };
 

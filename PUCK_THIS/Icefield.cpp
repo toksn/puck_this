@@ -1,6 +1,6 @@
 #include "Icefield.h"
 #include "GameManager.h"
-
+//#include "Goal.h"
 
 
 Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager)
