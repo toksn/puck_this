@@ -22,8 +22,8 @@ public:
 private:
 	sf::RectangleShape m_shape;
 	b2Fixture* m_fixture;
-	std::unique_ptr<Goal> m_goal_a;
-	std::unique_ptr<Goal> m_goal_b;
+	Goal* m_goal_a;
+	Goal* m_goal_b;
 
 	b2Vec2 m_size;
 

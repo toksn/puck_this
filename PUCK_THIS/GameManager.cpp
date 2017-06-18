@@ -43,7 +43,10 @@ void GameManager::draw(sf::RenderWindow& target)
 			sf::Vector2f screenPos = convertToScreen(worldPos);
 
 			e->m_transformable->setPosition(screenPos);
-			e->m_transformable->setRotation(e->m_body->GetAngle());
+			//float angle = angle_rad * 180.0f / b2_pi;
+			e->m_transformable->setRotation(e->m_body->GetAngle() * 180.0f / b2_pi);
+
+
 			//target.draw(*e->m_drawable);
 		}
 

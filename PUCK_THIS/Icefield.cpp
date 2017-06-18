@@ -22,8 +22,8 @@ Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager
 	m_body = world->CreateBody(&bdef);
 
 	// create two goals
-	m_goal_a = ::std::make_unique<Goal>(manager->create<Goal>());
-	m_goal_b = ::std::make_unique<Goal>(manager->create<Goal>());
+	m_goal_a = &manager->create<Goal>();
+	m_goal_b = &manager->create<Goal>();
 	
 
 
@@ -67,15 +67,15 @@ void Icefield::arrangeGoals(bool bRepositionOnly)
 	if (!bRepositionOnly)
 	{
 		float goal_length = m_size.y * 0.15f;
-		m_goal_a.get()->resize(goal_length * 0.5f, goal_length, 180.0f);
-		m_goal_b.get()->resize(goal_length * 0.5f, goal_length, 0.0f);
+		m_goal_a->resize(goal_length * 0.5f, goal_length, 180.0f);
+		m_goal_b->resize(goal_length * 0.5f, goal_length, 0.0f);
 	}
 	//position relative to icefield
 	if (m_body)
 	{
 		b2Vec2 icepos = m_body->GetPosition();
-		m_goal_a.get()->setPosition(b2Vec2(icepos.x - x_half + goal_dist_to_border, icepos.y));
-		m_goal_b.get()->setPosition(b2Vec2(icepos.x + x_half - goal_dist_to_border, icepos.y));
+		m_goal_a->setPosition(b2Vec2(icepos.x - x_half + goal_dist_to_border, icepos.y));
+		m_goal_b->setPosition(b2Vec2(icepos.x + x_half - goal_dist_to_border, icepos.y));
 	}
 }
 

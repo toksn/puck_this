@@ -49,7 +49,7 @@ void Goal::resize(float x_meter, float y_meter, float angle)
 		//b2ChainShape* shape = static_cast<b2ChainShape*>(m_fixture->GetShape());
 		//if (m_shapeChain)
 		{
-			float x_half = x_meter *0.5f;
+			//float x_half = x_meter *0.5f;
 			float y_half = y_meter *0.5f;
 			b2Vec2 boundaries[4];
 			boundaries[0] = b2Vec2(0.0f, -y_half);
@@ -71,7 +71,8 @@ void Goal::resize(float x_meter, float y_meter, float angle)
 				m_body->DestroyFixture(m_fixture);
 			m_fixture = m_body->CreateFixture(&fd);
 
-			m_body->SetTransform(m_body->GetPosition(), angle);
+			float angle_rad = angle * b2_pi / 180.0f;
+			m_body->SetTransform(m_body->GetPosition(), angle_rad);
 
 
 			// update drawing shape
@@ -83,8 +84,8 @@ void Goal::resize(float x_meter, float y_meter, float angle)
 			m_line.m_vertices.append(sf::Vertex(sf::Vector2f(size_px.x, -size_px.y)));
 			m_line.m_vertices.append(sf::Vertex(sf::Vector2f(size_px.x, size_px.y)));
 			m_line.m_vertices.append(sf::Vertex(sf::Vector2f(0.0f, size_px.y)));
-			//float angle_rad = angle * b2_pi / 180.0f;
-			m_line.setRotation(0.0f);
+			
+			//m_line.setRotation(0.0f);
 		}
 	}
 }
