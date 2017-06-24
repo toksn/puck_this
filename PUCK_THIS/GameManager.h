@@ -24,12 +24,10 @@ public:
 		static_assert(std::is_base_of<Entity, T>::value, "'T' must be derived from 'Entity'");
 
 		// create unique pointer by forwarding the given arguments + put it in the entities vector
-		m_entities.emplace_back(std::make_unique<T>(m_world.get(), this, std::forward<TArgs>(args)...));
-		//m_entities.emplace_back(std::make_unique<T>());
-
-
-		auto ptr = (*m_entities.rbegin()).get();
-
+		auto uPtr = std::make_unique<T>(m_world.get(), this, std::forward<TArgs>(args)...);
+		auto ptr = uPtr.get();
+		
+		m_entities.emplace_back(std::move(uPtr));
 		// create a hash entry for the typeid(T) and put the raw pointer in there
 		m_groupedEntities[typeid(T).hash_code()].emplace_back(ptr);
 

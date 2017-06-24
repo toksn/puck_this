@@ -7,6 +7,7 @@
 #include "Puck.h"
 #include "Icefield.h"
 #include "Player.h"
+#include "Team.h"
 
 Game::Game()
 {
@@ -103,5 +104,7 @@ void Game::restart()
 	//Goal goal_a = m_gameManager.create<Goal>();
 	//Goal goal_b = m_gameManager.create<Goal>();
 	m_gameManager.create<Puck>();
-	m_gameManager.create<Player>();
+	//m_gameManager.create<Player>();
+	m_gameManager.create<Team>("TeamA", true, 1);
+	m_gameManager.create<Team>("TeamB", false, 0);
 }

@@ -36,8 +36,9 @@ Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager
 
 Icefield::~Icefield()
 {
-	//if (m_world && m_body)
-	//	m_world->DestroyBody(m_body);
+	// tell the gamemanager that the goals should be destroyed as well
+	m_goal_a->destroyed = true;
+	m_goal_b->destroyed = true;
 	
 	printf("\nDestroyed an icefield.");
 }
