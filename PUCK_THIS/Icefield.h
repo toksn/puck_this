@@ -6,7 +6,7 @@ class Icefield :
 	public Entity
 {
 public:
-	Icefield(b2World* world, GameManager* manager);
+	Icefield(b2World* world, EntityManager* manager);
 	~Icefield();
 
 	// Inherited via Entity

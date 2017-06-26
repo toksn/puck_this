@@ -2,7 +2,7 @@
 #include "GameManager.h"
 
 
-Icefield::Icefield(b2World* world, GameManager* manager) : Entity(world, manager)
+Icefield::Icefield(b2World* world, EntityManager* manager) : Entity(world, manager)
 {
 	m_fixture = NULL;
 
@@ -111,7 +111,7 @@ void Icefield::resize(float x_meter, float y_meter)
 			m_fixture = m_body->CreateFixture(&fd);
 			
 			// update drawing shape
-			sf::Vector2f size_px = m_gameManager->convertToScreen(b2Vec2(x_meter, y_meter));
+			sf::Vector2f size_px = m_manager->convertToScreen(b2Vec2(x_meter, y_meter));
 			m_shape.setSize(size_px);
 			m_shape.setOrigin(size_px*0.5f);
 

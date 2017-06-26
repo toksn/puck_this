@@ -5,7 +5,7 @@ class Puck :
 	public CircleColEntity
 {
 public:
-	Puck(b2World* world, GameManager* manager);
+	Puck(b2World* world, EntityManager* manager);
 	~Puck();
 
 	void update(float deltaTime) override;

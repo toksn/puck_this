@@ -1,7 +1,7 @@
 #include "Player.h"
-#include "GameManager.h"
+#include "EntityManager.h"
 
-Player::Player(b2World* world, GameManager* manager) : CircleColEntity(world, manager)
+Player::Player(b2World* world, EntityManager* manager) : CircleColEntity(world, manager)
 {
 	// virtual circle size
 	m_virtualCircleSize = 2.0f;
@@ -103,7 +103,7 @@ void Player::setRadius(float radius_meter)
 void Player::setPlayerHeight(float height_meter)
 {
 	// player has m_fitFactor to determine the width from the height
-	float height_px = m_gameManager->convertToScreen(height_meter);
+	float height_px = m_manager->convertToScreen(height_meter);
 	float width_px = height_px * 0.5f / m_fitFactor;
 	float radius_px = width_px * 0.5f;
 	

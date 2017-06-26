@@ -14,6 +14,15 @@ Game::Game()
 	m_bPrintFPS = true;
 
 	setMaxFPS(0);
+
+	// create world
+	b2Vec2 gravity;
+	gravity.Set(0.0f, 0.0f);
+	m_world = std::make_unique<b2World>(gravity);
+
+	// create gameManager / guiManager
+	m_gameManager = std::make_unique<GameManager>(m_world.get());
+	m_guiManager = std::make_unique<GuiManager>(m_world.get());
 }
 
 
@@ -30,9 +39,12 @@ void Game::update()
 	sf::Time deltaTime = m_frameClock->restart();
 	
 	float curFPS = 1.0f / deltaTime.asSeconds();
+	
+	m_gameManager->refresh();
+	m_gameManager->update(deltaTime.asSeconds());
 
-	m_gameManager.refresh();
-	m_gameManager.update(deltaTime.asSeconds());
+	m_guiManager->refresh();
+	m_guiManager->update(deltaTime.asSeconds());
 	
 	// add render timer in seconds
 	m_renderTimer += deltaTime;
@@ -45,7 +57,9 @@ void Game::update()
 				printf("\nFPS: %f", 1.0f / m_renderTimer.asSeconds());
 
 			m_window->clear();
-			m_gameManager.draw(*m_window);
+			m_gameManager->draw(*m_window);
+
+			m_guiManager->draw(*m_window);
 			m_window->display();
 		}
 
@@ -129,9 +143,9 @@ void Game::restart()
 {
 
 	// create an icefield, puck and player
-	m_gameManager.create<Icefield>();
-	//Goal goal_a = m_gameManager.create<Goal>();
-	//Goal goal_b = m_gameManager.create<Goal>();
-	m_gameManager.create<Puck>();
-	m_gameManager.create<Player>();
+	m_gameManager->create<Icefield>();
+	//Goal goal_a = m_manager->create<Goal>();
+	//Goal goal_b = m_manager->create<Goal>();
+	m_gameManager->create<Puck>();
+	m_gameManager->create<Player>();
 }
