@@ -39,5 +39,7 @@ void Puck::update(float deltaTime)
 
 void Puck::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
+
 	target.draw(m_circle);
 }

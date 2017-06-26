@@ -31,6 +31,7 @@ CircleColEntity::~CircleColEntity()
 
 void CircleColEntity::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
 }
 
 void CircleColEntity::update(float deltaTime)

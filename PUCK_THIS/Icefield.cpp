@@ -44,6 +44,7 @@ Icefield::~Icefield()
 
 void Icefield::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
 	target.draw(m_shape);
 }
 

@@ -130,6 +130,8 @@ void Player::setPlayerHeight(float height_meter)
 
 void Player::draw(sf::RenderWindow & target)
 {
+	CircleColEntity::draw(target);
+
 	target.draw(m_circle);
 
 	// update rectangle position

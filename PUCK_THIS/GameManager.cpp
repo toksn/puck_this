@@ -37,19 +37,6 @@ void GameManager::draw(sf::RenderWindow& target)
 {
 	for (auto& e : m_entities)
 	{
-		if (e->m_body && e->m_transformable)
-		{
-			b2Vec2 worldPos = e->m_body->GetPosition();
-			sf::Vector2f screenPos = convertToScreen(worldPos);
-
-			e->m_transformable->setPosition(screenPos);
-			//float angle = angle_rad * 180.0f / b2_pi;
-			e->m_transformable->setRotation(e->m_body->GetAngle() * 180.0f / b2_pi);
-
-
-			//target.draw(*e->m_drawable);
-		}
-
 		e->draw(target);
 	}
 }

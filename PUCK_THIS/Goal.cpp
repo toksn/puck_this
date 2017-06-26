@@ -34,6 +34,8 @@ Goal::~Goal()
 
 void Goal::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
+
 	target.draw(m_line);
 }
 
