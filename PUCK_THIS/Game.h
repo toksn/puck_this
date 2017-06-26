@@ -21,7 +21,8 @@ private:
 	std::unique_ptr<sf::Clock> m_frameClock;
 	GameManager m_gameManager;
 	uint16		m_maxFPS;
-	float		m_renderStep;
-	float		m_renderTimer;
+	//sf::Time	m_renderStep;
+	sf::Time	m_renderTimer;
+	sf::Time	m_desiredFrameTime;
 };
 
