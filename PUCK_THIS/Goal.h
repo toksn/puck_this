@@ -6,7 +6,7 @@ class Goal :
 	public Entity
 {
 public:
-	Goal(b2World* world, GameManager* manager);
+	Goal(b2World* world, EntityManager* manager);
 	~Goal();
 
 	// Inherited via Entity

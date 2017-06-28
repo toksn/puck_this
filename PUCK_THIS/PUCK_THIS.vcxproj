@@ -127,9 +127,11 @@
   <ItemGroup>
     <ClCompile Include="CircleColEntity.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="Icefield.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -140,9 +142,11 @@
   <ItemGroup>
     <ClInclude Include="CircleColEntity.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="GuiManager.h" />
     <ClInclude Include="Icefield.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PolyLine.h" />

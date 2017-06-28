@@ -1,9 +1,7 @@
 #include "Goal.h"
-#include "GameManager.h"
+#include "EntityManager.h"
 
-
-
-Goal::Goal(b2World* world, GameManager* manager) : Entity(world, manager)
+Goal::Goal(b2World* world, EntityManager* manager) : Entity(world, manager)
 {
 	m_fixture = NULL;
 
@@ -34,6 +32,8 @@ Goal::~Goal()
 
 void Goal::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
+
 	target.draw(m_line);
 }
 
@@ -76,7 +76,7 @@ void Goal::resize(float x_meter, float y_meter, float angle)
 
 
 			// update drawing shape
-			sf::Vector2f size_px = m_gameManager->convertToScreen(b2Vec2(x_meter, y_meter));
+			sf::Vector2f size_px = m_manager->convertToScreen(b2Vec2(x_meter, y_meter));
 			size_px.y *= 0.5f;
 
 			m_line.m_vertices.clear();

@@ -4,7 +4,7 @@ class CircleColEntity :
 	public Entity
 {
 public:
-	CircleColEntity(b2World* world, GameManager* manager);
+	CircleColEntity(b2World* world, EntityManager* manager);
 	~CircleColEntity();
 
 	// Inherited via Entity

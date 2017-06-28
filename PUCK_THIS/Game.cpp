@@ -14,7 +14,16 @@ Game::Game()
 	m_frameClock = std::make_unique<sf::Clock>();
 	m_bPrintFPS = true;
 
-	setMaxFPS(100);
+	setMaxFPS(0);
+
+	// create world
+	b2Vec2 gravity;
+	gravity.Set(0.0f, 0.0f);
+	m_world = std::make_unique<b2World>(gravity);
+
+	// create gameManager / guiManager
+	m_gameManager = std::make_unique<GameManager>(m_world.get());
+	m_guiManager = std::make_unique<GuiManager>(m_world.get());
 }
 
 
@@ -22,58 +31,93 @@ Game::~Game()
 {
 }
 
+
+const sf::Time g_timingBuffer = sf::microseconds(500);
 void Game::update()
 {
 	// check for elapsed time and restart clock for next cycle
-	float deltaTime = (*m_frameClock).restart().asSeconds();
-	float curFPS = 1.0f / deltaTime;
+	//float deltaTime = (*m_frameClock).restart().asSeconds();
+	sf::Time deltaTime = m_frameClock->restart();
+	
+	float curFPS = 1.0f / deltaTime.asSeconds();
+	
+	m_gameManager->refresh();
+	m_gameManager->update(deltaTime.asSeconds());
 
-	m_gameManager.refresh();
-	m_gameManager.update(deltaTime);
+	m_guiManager->refresh();
+	m_guiManager->update(deltaTime.asSeconds());
 	
 	// add render timer in seconds
 	m_renderTimer += deltaTime;
 	// do fixed render steps until theres less than desired timeframe left
-	if(m_renderTimer >= m_renderStep)
+	//if(m_renderTimer >= m_desiredFrameTime)
 	{
 		if (m_window)
 		{
 			if (m_bPrintFPS)
-				printf("\nFPS: %f", 1.0f / m_renderTimer);
+				printf("\nFPS: %f", 1.0f / m_renderTimer.asSeconds());
 
 			m_window->clear();
-			m_gameManager.draw(*m_window);
+			m_gameManager->draw(*m_window);
+
+			m_guiManager->draw(*m_window);
 			m_window->display();
 		}
 
-		if (m_renderStep == 0.0f)
-			m_renderTimer = 0.0f;
+		if (m_desiredFrameTime == sf::Time::Zero)
+			m_renderTimer = sf::Time::Zero;
 		else
 		{
-			while(m_renderTimer>m_renderStep)
-				m_renderTimer -= m_renderStep;
+			while(m_renderTimer>m_desiredFrameTime)
+				m_renderTimer -= m_desiredFrameTime;
 		}
 	}
+	/*
+	sf::Time elapsedFrameTime = m_frameClock->getElapsedTime() + m_renderTimer;
+	if (elapsedFrameTime < m_desiredFrameTime)
+	{
+		// use sf::sleep for a more or less exact sleep because they use temporary high system precision
+		sf::Time timeToSleep = m_desiredFrameTime - elapsedFrameTime;
+		if (timeToSleep > g_timingBuffer)
+		{
+			sf::sleep(timeToSleep - g_timingBuffer);
 
-	//SleepEx(1, TRUE);
-	//constexpr std::chrono::milliseconds dur(1);
-	//std::this_thread::sleep_for(dur);
-	//std::this_thread::yield();
+			const sf::Time timeAfterSleep = m_frameClock->getElapsedTime() + m_renderTimer;
+			const sf::Time actualTimeSlept = timeAfterSleep - elapsedFrameTime;
+			printf("\nwanted to sleep: %dms\t\tactual time slept: %dms", (timeToSleep - g_timingBuffer).asMilliseconds(), actualTimeSlept.asMilliseconds());
+		}
+		 
+		// busy wait for the small rest of the frame (~1ms)
+		while (m_frameClock->getElapsedTime() +m_renderTimer - elapsedFrameTime < timeToSleep)
+		{
+			std::this_thread::yield();
+		}
+			
+	}*/
 }
 
 void Game::setMaxFPS(uint16 maxFPS)
 {
 	if (maxFPS == 0)
-		m_renderStep = 0.0f;
+		m_desiredFrameTime = sf::Time::Zero;
 	else
 	{
 		m_maxFPS = maxFPS;
-		m_renderStep = 1.0f / m_maxFPS;
+		//m_renderStep = sf::microseconds( 1.0f / m_maxFPS);
+		m_desiredFrameTime = sf::microseconds(sf::Int64(1000000.0 / m_maxFPS));
+		//m_desiredFrameTime = sf::microseconds(sf::Int64(1000000.0 / m_maxFPS));
 	}	
 }
 
 void Game::run()
 {
+	//LARGE_INTEGER time;
+	//LARGE_INTEGER last_update_time;
+	//LARGE_INTEGER min_wait_ticks;
+	//min_wait_ticks.QuadPart = 500;
+	//QueryPerformanceCounter(&last_update_time);
+
+
 	while (m_window && m_window->isOpen())
 	{
 		sf::Event event;
@@ -100,11 +144,9 @@ void Game::restart()
 {
 
 	// create an icefield, puck and player
-	m_gameManager.create<Icefield>();
-	//Goal goal_a = m_gameManager.create<Goal>();
-	//Goal goal_b = m_gameManager.create<Goal>();
-	m_gameManager.create<Puck>();
-	//m_gameManager.create<Player>();
-	m_gameManager.create<Team>("TeamA", true, 1);
-	m_gameManager.create<Team>("TeamB", false, 0);
+	m_gameManager->create<Icefield>();
+	//Goal goal_a = m_manager->create<Goal>();
+	//Goal goal_b = m_manager->create<Goal>();
+	m_gameManager->create<Puck>();
+	m_gameManager->create<Player>();
 }

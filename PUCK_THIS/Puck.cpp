@@ -1,6 +1,7 @@
 #include "Puck.h"
+#include "EntityManager.h"
 
-Puck::Puck(b2World* world, GameManager* manager) : CircleColEntity(world, manager)
+Puck::Puck(b2World* world, EntityManager* manager) : CircleColEntity(world, manager)
 {
 	m_circle.setFillColor(sf::Color::Green);
 
@@ -39,5 +40,7 @@ void Puck::update(float deltaTime)
 
 void Puck::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
+
 	target.draw(m_circle);
 }

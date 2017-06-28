@@ -1,9 +1,7 @@
 #include "CircleColEntity.h"
-#include "GameManager.h"
+#include "EntityManager.h"
 
-
-
-CircleColEntity::CircleColEntity(b2World* world, GameManager* manager) : Entity(world, manager)
+CircleColEntity::CircleColEntity(b2World* world, EntityManager* manager) : Entity(world, manager)
 {
 	// create draw circle shape //todo: radius
 	m_transformable = &m_circle;
@@ -31,6 +29,7 @@ CircleColEntity::~CircleColEntity()
 
 void CircleColEntity::draw(sf::RenderWindow & target)
 {
+	Entity::draw(target);
 }
 
 void CircleColEntity::update(float deltaTime)
@@ -39,7 +38,7 @@ void CircleColEntity::update(float deltaTime)
 
 void CircleColEntity::setRadius(float radius_meter)
 {
-	float radius_px = m_gameManager->convertToScreen(radius_meter);
+	float radius_px = m_manager->convertToScreen(radius_meter);
 	m_circle.setRadius(radius_px);
 	if (m_transformable)
 		m_transformable->setOrigin(radius_px, radius_px);
